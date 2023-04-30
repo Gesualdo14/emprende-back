@@ -3,7 +3,7 @@ const express = require("express")
 const app = express()
 const port = process.env.PORT
 
-app.use(express.static("./public"))
+app.use(express.static("public"))
 
 app.get("/api/users", function (req, res) {
   res.send(["Usuario 1", "Usuario 2"])
