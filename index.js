@@ -1,57 +1,14 @@
 require("dotenv").config()
+const express = require("express")
+const app = express()
+const port = process.env.PORT
 
-const http = require("http")
+app.use(express.static("public"))
 
-function requestController() {
-  // Lógica de nuestra función
-  console.log("Hola mundo!!")
-}
-
-// Configurar nuestro servidor
-const server = http.createServer(requestController)
-
-const PORT = process.env.PORT
-
-server.listen(PORT, function () {
-  console.log("Aplicación corriendo en puerto: " + PORT)
+app.get("/api/users", function (req, res) {
+  res.send(["Usuario 1", "Usuario 2"])
 })
 
-// const http = require("http")
-// const fs = require("fs")
-
-// function sendFile(fileName, res) {
-//   const filePath = "./public/" + fileName
-//   fs.readFile(filePath, (err, htmlFile) => {
-//     if (err) {
-//       res.writeHead(500, { "Content-Type": "text/plain" })
-//       res.end("Hubo un error en el servidor")
-//     } else {
-//       res.writeHead(200, { "Content-Type": "text/html" })
-//       res.end(htmlFile)
-//     }
-//   })
-// }
-
-// function requestController(req, res) {
-//   // Lógica de nuestra función
-//   const url = req.url
-//   const urlParts = url.split(".")
-//   const fileExt = urlParts[urlParts.length - 1]
-//   console.log({ url, fileExt })
-//   if (url === "/") {
-//     sendFile("index.html", res)
-//   }
-
-//   if (url === "/about") {
-//     sendFile("about.html", res)
-//   }
-
-//   if (!["/about", "/"].includes(url)) {
-//     sendFile("404.html", res)
-//   }
-// }
-
-// // Configurar nuestro servidor
-// const server = http.createServer(requestController)
-
-// server.listen(4000)
+app.listen(port, function () {
+  console.log(`Example app listening on port ${port}`)
+})
