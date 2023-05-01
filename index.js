@@ -38,6 +38,46 @@ function requestController(req, res) {
     })
     return
   }
+  if (method === "GET" && url === "/index.js") {
+    res.setHeader("Content-type", "text/html")
+    fs.readFile("./public/index.js", function (err, file) {
+      /* Valores que evaluados en un contexto BOOLEANO, arrojan FALSY:
+        a) null
+        b) undefined
+        c) 0
+        d) ""
+        e) false
+        f) NaN
+      */
+      if (err) {
+        console.log(err)
+        return
+      }
+      res.write(file)
+      res.end()
+    })
+    return
+  }
+  if (method === "GET" && url === "/styles.css") {
+    res.setHeader("Content-type", "text/html")
+    fs.readFile("./public/styles.css", function (err, file) {
+      /* Valores que evaluados en un contexto BOOLEANO, arrojan FALSY:
+        a) null
+        b) undefined
+        c) 0
+        d) ""
+        e) false
+        f) NaN
+      */
+      if (err) {
+        console.log(err)
+        return
+      }
+      res.write(file)
+      res.end()
+    })
+    return
+  }
 
   res.setHeader("Content-type", "text/html; charset=utf-8")
   res.write("<h1>Página no encontrada 🥲</h1>")
