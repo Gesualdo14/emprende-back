@@ -1,14 +1,54 @@
 require("dotenv").config()
-const express = require("express")
-const app = express()
-const port = process.env.PORT
+const http = require("http")
+const fs = require("fs")
 
-app.use(express.static("public"))
+function requestController(req, res) {
+  const url = req.url
+  const method = req.method
 
-app.get("/api/users", function (req, res) {
-  res.send(["Usuario 1", "Usuario 2"])
-})
+  if (method === "GET" && url === "/") {
+    res.setHeader("Content-type", "text/html")
+    fs.readFile("./public/index.html", function (err, file) {
+      if (err) {
+        console.log("HUBO UN ERROR")
+      }
+      res.write(file)
+      res.end()
+    })
+    return
+  }
 
-app.listen(port, function () {
-  console.log(`Example app listening on port ${port}`)
+  if (method === "GET" && url === "/about") {
+    res.setHeader("Content-type", "text/html")
+    fs.readFile("./public/about.html", function (err, file) {
+      /* Valores que evaluados en un contexto BOOLEANO, arrojan FALSY:
+        a) null
+        b) undefined
+        c) 0
+        d) ""
+        e) false
+        f) NaN
+      */
+      if (err) {
+        console.log(err)
+        return
+      }
+      res.write(file)
+      res.end()
+    })
+    return
+  }
+
+  res.setHeader("Content-type", "text/html; charset=utf-8")
+  res.write("<h1>Página no encontrada 🥲</h1>")
+  res.end()
+}
+
+// Configurar nuestro servidor
+const server = http.createServer(requestController)
+
+const PORT = process.env.PORT
+
+server.listen(PORT, function () {
+  console.log("Aplicación corriendo en puerto: " + PORT)
 })
