@@ -7,5 +7,5 @@ console.log({ button })
 // Nutrir de funcionalidad a los botones
 button.addEventListener("click", function () {
   console.log("CLICK!!")
-  fetch("http://localhost:4000/users")
+  fetch("https://emprende-back.onrender.com/users", { mode: "no-cors" })
 })
