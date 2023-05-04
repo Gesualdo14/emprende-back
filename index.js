@@ -1,94 +1,25 @@
 require("dotenv").config()
-const http = require("http")
-const fs = require("fs")
+const express = require("express")
+const app = express()
+const port = process.env.PORT
 
-function requestController(req, res) {
-  const url = req.url
-  const method = req.method
+// Servir archivos estáticos
+app.use((req, res, next) => {
+  console.log({ req, __dirname })
+  next()
+})
+app.use(express.static("public"))
 
-  if (method === "GET" && url === "/") {
-    res.setHeader("Content-type", "text/html")
-    fs.readFile("./public/index.html", function (err, file) {
-      if (err) {
-        console.log("HUBO UN ERROR")
-      }
-      res.write(file)
-      res.end()
-    })
-    return
-  }
+// COnfigurar RUTAS
+app.get("/", function (req, res) {
+  res.send("Hello World!")
+})
 
-  if (method === "GET" && url === "/about") {
-    res.setHeader("Content-type", "text/html")
-    fs.readFile("./public/about.html", function (err, file) {
-      /* Valores que evaluados en un contexto BOOLEANO, arrojan FALSY:
-        a) null
-        b) undefined
-        c) 0
-        d) ""
-        e) false
-        f) NaN
-      */
-      if (err) {
-        console.log(err)
-        return
-      }
-      res.write(file)
-      res.end()
-    })
-    return
-  }
-  if (method === "GET" && url === "/index.js") {
-    res.setHeader("Content-type", "text/html")
-    fs.readFile("./public/index.js", function (err, file) {
-      /* Valores que evaluados en un contexto BOOLEANO, arrojan FALSY:
-        a) null
-        b) undefined
-        c) 0
-        d) ""
-        e) false
-        f) NaN
-      */
-      if (err) {
-        console.log(err)
-        return
-      }
-      res.write(file)
-      res.end()
-    })
-    return
-  }
-  if (method === "GET" && url === "/styles.css") {
-    res.setHeader("Content-type", "text/html")
-    fs.readFile("./public/styles.css", function (err, file) {
-      /* Valores que evaluados en un contexto BOOLEANO, arrojan FALSY:
-        a) null
-        b) undefined
-        c) 0
-        d) ""
-        e) false
-        f) NaN
-      */
-      if (err) {
-        console.log(err)
-        return
-      }
-      res.write(file)
-      res.end()
-    })
-    return
-  }
+app.get("/users", function (req, res) {
+  res.send([{ name: "Martin" }, { name: "Francisco" }])
+})
 
-  res.setHeader("Content-type", "text/html; charset=utf-8")
-  res.write("<h1>Página no encontrada 🥲</h1>")
-  res.end()
-}
-
-// Configurar nuestro servidor
-const server = http.createServer(requestController)
-
-const PORT = process.env.PORT
-
-server.listen(PORT, function () {
-  console.log("Aplicación corriendo en puerto: " + PORT)
+// Poner a escuchar la APP en un puerto
+app.listen(port, function () {
+  console.log(`Example app listening on port ${port}`)
 })

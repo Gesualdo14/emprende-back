@@ -1,19 +1,11 @@
 console.log("Este JS va a ser interpretado por el NAVEGADOR")
 
-const btnCreate = document.getElementById("create")
-const btnGet = document.querySelector("#get")
-const input = document.getElementsByTagName("input")
-console.log({ input, btnCreate, btnGet })
+// Obtener elementos del HTML y guardarlos en constantes
+const button = document.querySelector("button")
+console.log({ button })
 
-btnCreate.addEventListener("click", function () {
-  console.log("CLICK!")
-  fetch("/api/tasks", {
-    headers: { "Content-Type": "application/json" },
-    method: "POST",
-    body: JSON.stringify({ name: input.value }),
-  })
-})
-
-btnGet.addEventListener("click", function () {
-  fetch("/api/tasks")
+// Nutrir de funcionalidad a los botones
+button.addEventListener("click", function () {
+  console.log("CLICK!!")
+  fetch("http://localhost:4000/users")
 })
