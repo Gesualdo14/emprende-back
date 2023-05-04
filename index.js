@@ -7,11 +7,7 @@ const port = process.env.PORT
 app.use((req, res, next) => {
   const referer = req.headers.referer
   console.log({ origin: req.origin, referer })
-  if (referer !== "https://emprende-back.onrender.com/") {
-    res.status(403).send("Forbidden")
-  } else {
-    next()
-  }
+  next()
 })
 app.use(express.static("public"))
 
