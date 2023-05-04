@@ -5,7 +5,8 @@ const port = process.env.PORT
 
 // Servir archivos estáticos
 app.use((req, res, next) => {
-  console.log({ method: req.method, hostname: req.hostname, __dirname })
+  const referer = req.headers.referer
+  console.log({ method: req.method, referer })
   next()
 })
 app.use(express.static("public"))
@@ -21,5 +22,5 @@ app.get("/users", function (req, res) {
 
 // Poner a escuchar la APP en un puerto
 app.listen(port, function () {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}. Dirname: ${__dirname}`)
 })
