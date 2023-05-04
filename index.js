@@ -5,7 +5,7 @@ const port = process.env.PORT
 
 // Servir archivos estáticos
 app.use((req, res, next) => {
-  console.log({ req, __dirname })
+  console.log({ method: req.method, hostname: req.hostname, __dirname })
   next()
 })
 app.use(express.static("public"))
